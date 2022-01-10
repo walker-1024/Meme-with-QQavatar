@@ -21,7 +21,7 @@ class DrawTool():
 			os.mkdir(self.avatarDirPath)
 
 	# 返回一个数组，里面是每个结果图片的本地绝对路径
-	def wantDraw(self, text) -> [str]:
+	def wantDraw(self, text):
 
 		# 返回圆角头像，size 格式应为 (width, height)
 		def getAvatar(text, size):
