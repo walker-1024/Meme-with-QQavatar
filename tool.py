@@ -95,7 +95,18 @@ class DrawTool():
 				throwImages.append(backImage)
 			resultPath2 = os.path.join(self.resultDirPath, "{}.gif".format(time.time()))
 			throwImages[0].save(resultPath2, format = "GIF", append_images = throwImages[1:], save_all = True, duration = 100, loop = 0)
-			return [resultPath, resultPath2]
+			# 第三个 丢
+			throwPath = os.path.join(self.drawPath, "throw-2")
+			throwImages = []
+			theAvatar = avatar.resize((84, 84))
+			positions = [(199,32),(114,-1),(22,30),(0,46),(100,-1),(195,29)]
+			for i in range(0, 6):
+				backImage = Image.open(os.path.join(throwPath, "throw_{}.png".format(i + 1)))
+				backImage.paste(theAvatar, positions[i], theAvatar.split()[3])
+				throwImages.append(backImage)
+			resultPath3 = os.path.join(self.resultDirPath, "{}.gif".format(time.time()))
+			throwImages[0].save(resultPath3, format = "GIF", append_images = throwImages[1:], save_all = True, duration = 100, loop = 0)
+			return [resultPath, resultPath2, resultPath3]
 		elif text.startswith("仰望大佬"):
 			avatar = getAvatar(text[4:], (100, 100))
 			if avatar == None:
@@ -469,6 +480,17 @@ class DrawTool():
 			resultPath = os.path.join(self.resultDirPath, "{}.gif".format(time.time()))
 			kickImages[0].save(resultPath, format = "GIF", append_images = kickImages[1:], save_all = True, duration = 100, loop = 0)
 			return [resultPath]
+		elif text.startswith("捂脸"):
+			avatar = getAvatar(text[2:], (419, 419))
+			if avatar == None:
+				return False
+			frontImage = Image.open(os.path.join(self.drawPath, "捂脸.png"))
+			facepalm = Image.new("RGBA", frontImage.size, (255, 255, 255)) # 白底
+			facepalm.paste(avatar, (46, 0), avatar.split()[3]) # 加上头像
+			facepalm.paste(frontImage, (0, 0), frontImage.split()[3]) # 加上手
+			resultPath = os.path.join(self.resultDirPath, "{}.png".format(time.time()))
+			facepalm.save(resultPath)
+			return [resultPath]
 
 		return None
 
@@ -502,6 +524,7 @@ def test():
 		"爬[@{}]".format(testQQNum),
 		"推[@{}]".format(testQQNum),
 		"踢[@{}]".format(testQQNum),
+		"捂脸[@{}]".format(testQQNum),
 	]
 
 	tool = DrawTool()

@@ -14,6 +14,8 @@
 
 <img src="result/1641818404.1976929.gif" alt="1641818404.1976929" width = "500" />
 
+<img src="result/1642313462.4174132.gif" alt="1642313462.4174132" width = "500" />
+
 ### 仰望大佬
 
 <img src="result/1641818404.445751.jpg" alt="1641818404.445751" width = "500" />
@@ -96,6 +98,10 @@
 
 <img src="result/1641818410.256871.gif" alt="1641818410.256871" width = "500" />
 
+### 捂脸
+
+<img src="result/1642313467.541203.png" alt="1642313467.541203" width = "500" />
+
 ### There will be more...
 
 
@@ -137,6 +143,7 @@ testCommand = [
     "爬[@{}]".format(testQQNum),
     "推[@{}]".format(testQQNum),
     "踢[@{}]".format(testQQNum),
+    "捂脸[@{}]".format(testQQNum),
 ]
 
 tool = DrawTool()
