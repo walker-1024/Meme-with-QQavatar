@@ -483,13 +483,44 @@ class DrawTool():
 		elif text.startswith("捂脸"):
 			avatar = getAvatar(text[2:], (419, 419))
 			if avatar == None:
-				return False
+				return None
 			frontImage = Image.open(os.path.join(self.drawPath, "捂脸.png"))
 			facepalm = Image.new("RGBA", frontImage.size, (255, 255, 255)) # 白底
 			facepalm.paste(avatar, (46, 0), avatar.split()[3]) # 加上头像
 			facepalm.paste(frontImage, (0, 0), frontImage.split()[3]) # 加上手
 			resultPath = os.path.join(self.resultDirPath, "{}.png".format(time.time()))
 			facepalm.save(resultPath)
+			return [resultPath]
+		elif text.startswith("踩"):
+			avatar = getAvatar(text[1:], (300, 300))
+			if avatar == None:
+				return None
+			treadPath = os.path.join(self.drawPath, "tread")
+			treadImages = []
+			for i in range(0, 5):
+				frontImage = Image.open(os.path.join(treadPath, "tread_{}.png".format(i + 1)))
+				backImage = Image.new("RGBA", frontImage.size, (255, 255, 255))
+				if i + 1 == 1 or i + 1 == 2:
+					theAvatar = avatar.resize((103, 65))
+					theAvatar = theAvatar.rotate(-26, expand = True)
+					# 扩展后实际大小为(123, 105)
+					backImage.paste(theAvatar, (31, 188), theAvatar.split()[3])
+				elif i + 1 == 3:
+					theAvatar = avatar.resize((90, 71))
+					theAvatar = theAvatar.rotate(-14)
+					backImage.paste(theAvatar, (51, 209), theAvatar.split()[3])
+				elif i + 1 == 4:
+					theAvatar = avatar.resize((85, 76))
+					theAvatar = theAvatar.rotate(-7)
+					backImage.paste(theAvatar, (52, 203), theAvatar.split()[3])
+				elif i + 1 == 5:
+					theAvatar = avatar.resize((88, 82))
+					theAvatar = theAvatar.rotate(-7)
+					backImage.paste(theAvatar, (49, 198), theAvatar.split()[3])
+				backImage.paste(frontImage, (0, 0), frontImage.split()[3])
+				treadImages.append(backImage)
+			resultPath = os.path.join(self.resultDirPath, "{}.gif".format(time.time()))
+			treadImages[0].save(resultPath, format = "GIF", append_images = treadImages[1:], save_all = True, duration = 70, loop = 0)
 			return [resultPath]
 
 		return None
@@ -525,6 +556,7 @@ def test():
 		"推[@{}]".format(testQQNum),
 		"踢[@{}]".format(testQQNum),
 		"捂脸[@{}]".format(testQQNum),
+		"踩[@{}]".format(testQQNum),
 	]
 
 	tool = DrawTool()

@@ -102,6 +102,10 @@
 
 <img src="result/1642313467.541203.png" alt="1642313467.541203" width = "500" />
 
+### 踩
+
+<img src="result/1642394725.157651.gif" alt="1642394725.157651" width = "500" />
+
 ### There will be more...
 
 
@@ -144,6 +148,7 @@ testCommand = [
     "推[@{}]".format(testQQNum),
     "踢[@{}]".format(testQQNum),
     "捂脸[@{}]".format(testQQNum),
+    "踩[@{}]".format(testQQNum),
 ]
 
 tool = DrawTool()
