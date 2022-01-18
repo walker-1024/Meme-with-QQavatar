@@ -283,7 +283,13 @@ class DrawTool():
 			eat.paste(frontImage, (0, 0), frontImage.split()[3]) # 加上鲨鱼
 			resultPath = os.path.join(self.resultDirPath, "{}.png".format(time.time()))
 			eat.save(resultPath)
-			return [resultPath]
+			# 另一个 吃
+			eat = Image.open(os.path.join(self.drawPath, "eat-2.jpg"))
+			theAvatar = avatar.resize((158, 152))
+			eat.paste(theAvatar, (179, 172), theAvatar.split()[3])
+			resultPath2 = os.path.join(self.resultDirPath, "{}.jpg".format(time.time()))
+			eat.save(resultPath2)
+			return [resultPath, resultPath2]
 		elif text.startswith("吞"):
 			avatar = getAvatar(text[1:], (300, 300))
 			if avatar == None:
