@@ -453,6 +453,7 @@ class DrawTool():
 			filelist = os.listdir(path)
 			index = random.randint(0, len(filelist) - 1)
 			creep = Image.open(os.path.join(path, filelist[index]))
+			creep = creep.resize((500, 500))
 			creep.paste(avatar, (0, 415), avatar.split()[3])
 			resultPath = os.path.join(self.resultDirPath, "{}.jpg".format(time.time()))
 			creep.save(resultPath)
