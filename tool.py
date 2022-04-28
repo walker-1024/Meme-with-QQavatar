@@ -529,6 +529,17 @@ class DrawTool():
 			resultPath = os.path.join(self.resultDirPath, "{}.gif".format(time.time()))
 			treadImages[0].save(resultPath, format = "GIF", append_images = treadImages[1:], save_all = True, duration = 70, loop = 0)
 			return [resultPath]
+		elif text.startswith("脆弱"):
+			avatar = getAvatar(text[2:], (73, 73))
+			if avatar == None:
+				return None
+			frontImage = Image.open(os.path.join(self.drawPath, "脆弱.png"))
+			fragile = Image.new("RGBA", frontImage.size, (255, 255, 255))
+			fragile.paste(avatar, (45, 62), avatar.split()[3])
+			fragile.paste(frontImage, (0, 0), frontImage.split()[3])
+			resultPath = os.path.join(self.resultDirPath, "{}.png".format(time.time()))
+			fragile.save(resultPath)
+			return [resultPath]
 
 		return None
 
@@ -564,6 +575,7 @@ def test():
 		"踢[@{}]".format(testQQNum),
 		"捂脸[@{}]".format(testQQNum),
 		"踩[@{}]".format(testQQNum),
+		"脆弱{}".format(testQQNum),
 	]
 
 	tool = DrawTool()

@@ -108,6 +108,10 @@
 
 <img src="result/1642394725.157651.gif" alt="1642394725.157651" width = "500" />
 
+### 脆弱
+
+<img src="result/1651169640.8554251.png" alt="1651169640.8554251" width = "500" />
+
 ### There will be more...
 
 
@@ -151,6 +155,7 @@ testCommand = [
     "踢[@{}]".format(testQQNum),
     "捂脸[@{}]".format(testQQNum),
     "踩[@{}]".format(testQQNum),
+    "脆弱{}".format(testQQNum),
 ]
 
 tool = DrawTool()
