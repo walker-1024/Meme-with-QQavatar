@@ -540,6 +540,24 @@ class DrawTool():
 			resultPath = os.path.join(self.resultDirPath, "{}.png".format(time.time()))
 			fragile.save(resultPath)
 			return [resultPath]
+		elif text.startswith("吸"):
+			avatar = getAvatar(text[1:], (300, 300))
+			if avatar == None:
+				return None
+			inhalePath = os.path.join(self.drawPath, "inhale")
+			inhaleImages = []
+			positions = [(65,88),(61,89),(60,112),(70,142),(68,151),(70,129),(73,141),(69,145),(70,154),(68,119),(64,115),(64,99)]
+			sizes = [(162,151),(167,146),(165,120),(151,90),(151,84),(149,109),(145,94),(151,89),(149,76),(152,118),(160,121),(161,140)]
+			for i in range(0, 12):
+				frontImage = Image.open(os.path.join(inhalePath, "inhale_{}.png".format(i + 1)))
+				img = Image.new("RGBA", frontImage.size, (255, 255, 255))
+				theAvatar = avatar.resize(sizes[i])
+				img.paste(theAvatar, positions[i], theAvatar.split()[3])
+				img.paste(frontImage, (0, 0), frontImage.split()[3])
+				inhaleImages.append(img)
+			resultPath = os.path.join(self.resultDirPath, "{}.gif".format(time.time()))
+			inhaleImages[0].save(resultPath, format = "GIF", append_images = inhaleImages[1:], save_all = True, duration = 60, loop = 0)
+			return [resultPath]
 
 		return None
 
@@ -576,6 +594,7 @@ def test():
 		"捂脸[@{}]".format(testQQNum),
 		"踩[@{}]".format(testQQNum),
 		"脆弱{}".format(testQQNum),
+		"吸{}".format(testQQNum),
 	]
 
 	tool = DrawTool()

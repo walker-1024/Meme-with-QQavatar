@@ -112,6 +112,11 @@
 
 <img src="result/1651169640.8554251.png" alt="1651169640.8554251" width = "500" />
 
+### 吸
+
+<img src="result/1658594434.612134.gif" alt="1658594434.612134" width = "500" />
+
+
 ### There will be more...
 
 
@@ -156,6 +161,7 @@ testCommand = [
     "捂脸[@{}]".format(testQQNum),
     "踩[@{}]".format(testQQNum),
     "脆弱{}".format(testQQNum),
+    "吸{}".format(testQQNum),
 ]
 
 tool = DrawTool()
