@@ -558,6 +558,17 @@ class DrawTool():
 			resultPath = os.path.join(self.resultDirPath, "{}.gif".format(time.time()))
 			inhaleImages[0].save(resultPath, format = "GIF", append_images = inhaleImages[1:], save_all = True, duration = 60, loop = 0)
 			return [resultPath]
+		elif text.startswith("好玩"):
+			avatar = getAvatar(text[2:], (90, 90))
+			if avatar == None:
+				return None
+			frontImage = Image.open(os.path.join(self.drawPath, "interesting.png"))
+			interesting = Image.new("RGBA", frontImage.size, (255, 255, 255))
+			interesting.paste(avatar, (321, 172), avatar.split()[3])
+			interesting.paste(frontImage, (0, 0), frontImage.split()[3])
+			resultPath = os.path.join(self.resultDirPath, "{}.png".format(time.time()))
+			interesting.save(resultPath)
+			return [resultPath]
 
 		return None
 
@@ -595,6 +606,7 @@ def test():
 		"踩[@{}]".format(testQQNum),
 		"脆弱{}".format(testQQNum),
 		"吸{}".format(testQQNum),
+		"好玩{}".format(testQQNum),
 	]
 
 	tool = DrawTool()
