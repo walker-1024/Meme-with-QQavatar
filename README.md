@@ -120,6 +120,13 @@
 
 <img src="result/1659363477.034035.png" alt="1659363477.034035" width = "500" />
 
+### 举牌
+
+<img src="result/1661704791.61061.jpg" alt="1661704791.61061" width = "500" />
+
+### 粉
+
+<img src="result/1661704791.617356.jpg" alt="1661704791.617356" width = "500" />
 
 ### There will be more...
 
@@ -140,6 +147,8 @@ testQQNum = 10000
 # 格式应为：丢[@QQ号] 或者 丢QQ号
 # 其中的 "丢" 表示要画 "丢" 这张图，可以换成其他指令
 # 之所以支持 "[@QQ号]" 的格式是因为在大多数 qqbot 框架中，消息中的艾特是这种格式
+
+# "举牌"、"粉" 等命令的格式为 命令+文案
 
 testCommand = [
     "丢{}".format(testQQNum),
@@ -167,6 +176,8 @@ testCommand = [
     "脆弱{}".format(testQQNum),
     "吸{}".format(testQQNum),
     "好玩{}".format(testQQNum),
+    "举牌色色",
+    "粉迷迭香",
 ]
 
 tool = DrawTool()

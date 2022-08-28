@@ -5,8 +5,7 @@ import json
 import time
 import datetime
 import random
-from PIL import Image
-from PIL import ImageDraw
+from PIL import Image, ImageDraw, ImageFont
 
 class DrawTool():
 
@@ -569,9 +568,69 @@ class DrawTool():
 			resultPath = os.path.join(self.resultDirPath, "{}.png".format(time.time()))
 			interesting.save(resultPath)
 			return [resultPath]
+		elif text.startswith("举牌"):
+			theText = text.split("\n")[0][2:]
+			if len(theText) == 0:
+				return None
+			maxTextWidth = 142
+			maxTextHeight = 95
+			maxFontSize = 40
+			minFontSize = 20
+			tempDraw = ImageDraw.Draw(Image.new("RGB", (100, 100), (255, 255, 255)))
+			curFontSize = maxFontSize
+			curTextWidth = 0
+			curTextHeight = 0
+			while curFontSize >= minFontSize:
+				font = ImageFont.truetype("SimHei.ttf", curFontSize)
+				bounds = tempDraw.textbbox((0, 0), theText, font)
+				if bounds[2] < maxTextWidth:
+					curTextWidth = bounds[2]
+					curTextHeight = bounds[3]
+					break
+				curFontSize -= 1
+			if curFontSize < minFontSize:
+				return None
+			offsetY = (maxTextHeight - curTextHeight) / 2
+			offsetX = (maxTextWidth - curTextWidth) / 2
+			paper = Image.open(os.path.join(self.drawPath, "paper.jpg"))
+			draw = ImageDraw.Draw(paper)
+			draw.text((76 + offsetX, 192 + offsetY), theText, fill="#000000", font=ImageFont.truetype("SimHei.ttf", curFontSize))
+			resultPath = os.path.join(self.resultDirPath, "{}.jpg".format(time.time()))
+			paper.save(resultPath)
+			# TODO: 另一个举牌
+			return [resultPath]
+		elif text.startswith("粉"):
+			theText = text.split("\n")[0][1:]
+			if len(theText) == 0:
+				return None
+			maxTextWidth = 245
+			maxTextHeight = 140
+			maxFontSize = 80
+			minFontSize = 45
+			tempDraw = ImageDraw.Draw(Image.new("RGB", (100, 100), (255, 255, 255)))
+			curFontSize = maxFontSize
+			curTextWidth = 0
+			curTextHeight = 0
+			while curFontSize >= minFontSize:
+				font = ImageFont.truetype("SimHei.ttf", curFontSize)
+				bounds = tempDraw.textbbox((0, 0), theText, font)
+				if bounds[2] < maxTextWidth:
+					curTextWidth = bounds[2]
+					curTextHeight = bounds[3]
+					break
+				curFontSize -= 1
+			if curFontSize < minFontSize:
+				return None
+			offsetY = (maxTextHeight - curTextHeight) / 2
+			offsetX = (maxTextWidth - curTextWidth) / 2
+			superLike = Image.open(os.path.join(self.drawPath, "粉.jpg"))
+			draw = ImageDraw.Draw(superLike)
+			draw.text((125 + offsetX, 20 + offsetY), theText, fill="#ff0000", font=ImageFont.truetype("SimHei.ttf", curFontSize))
+			resultPath = os.path.join(self.resultDirPath, "{}.jpg".format(time.time()))
+			superLike.save(resultPath)
+			return [resultPath]
 
 		return None
-
 
 
 def test():
@@ -580,6 +639,8 @@ def test():
 	# 格式应为：丢[@QQ号] 或者 丢QQ号
 	# 其中的 "丢" 表示要画 "丢" 这张图，可以换成其他指令
 	# 之所以支持 "[@QQ号]" 的格式是因为在大多数 qqbot 框架中，消息中的艾特是这种格式
+
+	# "举牌"、"粉" 等命令的格式为 命令+文案
 
 	testCommand = [
 		"丢{}".format(testQQNum),
@@ -607,6 +668,8 @@ def test():
 		"脆弱{}".format(testQQNum),
 		"吸{}".format(testQQNum),
 		"好玩{}".format(testQQNum),
+		"举牌色色",
+		"粉迷迭香",
 	]
 
 	tool = DrawTool()
