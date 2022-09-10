@@ -566,6 +566,24 @@ class DrawTool:
             resultPath = os.path.join(self.resultDirPath, "{}.png".format(time.time()))
             interesting.save(resultPath)
             return [resultPath]
+        elif text.startswith("贴贴"):
+            avatar = getAvatar(text[2:], (300, 300))
+            if avatar is None:
+                return None
+            snugglePath = os.path.join(self.drawPath, "snuggle")
+            snuggleImages = []
+            positions = [(77, 257), (82, 271), (82, 271), (81, 261), (64, 243)]
+            sizes = [(174, 183), (175, 169), (175, 169), (175, 178), (194, 193)]
+            for i in range(0, 5):
+                frontImage = Image.open(os.path.join(snugglePath, "snuggle_{}.png".format(i + 1)))
+                img = Image.new("RGBA", frontImage.size, (255, 255, 255))
+                theAvatar = avatar.resize(sizes[i])
+                img.paste(theAvatar, positions[i], theAvatar.split()[3])
+                img.paste(frontImage, (0, 0), frontImage.split()[3])
+                snuggleImages.append(img)
+            resultPath = os.path.join(self.resultDirPath, "{}.gif".format(time.time()))
+            snuggleImages[0].save(resultPath, format="GIF", append_images=snuggleImages[1:], save_all=True, duration=110, loop=0)
+            return [resultPath]
 
         return None
 
@@ -603,6 +621,7 @@ def test():
         "脆弱{}".format(testQQNum),
         "吸{}".format(testQQNum),
         "好玩{}".format(testQQNum),
+        "贴贴{}".format(testQQNum),
     ]
 
     tool = DrawTool()

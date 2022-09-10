@@ -120,6 +120,10 @@
 
 <img src="result/1659363477.034035.png" alt="1659363477.034035" width = "500" />
 
+### 贴贴
+
+<img src="result/1662133252.766366.gif" alt="1662133252.766366" width = "500" />
+
 
 ### There will be more...
 
@@ -167,6 +171,7 @@ testCommand = [
     "脆弱{}".format(testQQNum),
     "吸{}".format(testQQNum),
     "好玩{}".format(testQQNum),
+    "贴贴{}".format(testQQNum),
 ]
 
 tool = DrawTool()
