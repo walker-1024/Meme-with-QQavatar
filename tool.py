@@ -584,6 +584,24 @@ class DrawTool:
             resultPath = os.path.join(self.resultDirPath, "{}.gif".format(time.time()))
             snuggleImages[0].save(resultPath, format="GIF", append_images=snuggleImages[1:], save_all=True, duration=110, loop=0)
             return [resultPath]
+        elif text.startswith("弹"):
+            avatar = getAvatar(text[1:], (100, 100))
+            if avatar is None:
+                return None
+            bouncePath = os.path.join(self.drawPath, "bounce")
+            bounceImages = []
+            positions = [(103, 51), (103, 46), (101, 10), (101, 27), (103, 46)]
+            sizes = [(35, 35), (35, 35), (39, 35), (38, 37), (35, 35)]
+            for i in range(0, 5):
+                frontImage = Image.open(os.path.join(bouncePath, "bounce_{}.png".format(i + 1)))
+                img = Image.new("RGBA", frontImage.size, (255, 255, 255))
+                theAvatar = avatar.resize(sizes[i])
+                img.paste(theAvatar, positions[i], theAvatar.split()[3])
+                img.paste(frontImage, (0, 0), frontImage.split()[3])
+                bounceImages.append(img)
+            resultPath = os.path.join(self.resultDirPath, "{}.gif".format(time.time()))
+            bounceImages[0].save(resultPath, format="GIF", append_images=bounceImages[1:], save_all=True, duration=70, loop=0)
+            return [resultPath]
 
         return None
 
@@ -622,6 +640,7 @@ def test():
         "吸{}".format(testQQNum),
         "好玩{}".format(testQQNum),
         "贴贴{}".format(testQQNum),
+        "弹{}".format(testQQNum),
     ]
 
     tool = DrawTool()
