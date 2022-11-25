@@ -20,8 +20,8 @@ class DrawTool:
     # 返回一个数组，里面是每个结果图片的本地绝对路径
     def wantDraw(self, text):
 
-        # 返回圆角头像，size 格式应为 (width, height)
-        def getAvatar(text, size):
+        # 返回头像，size 格式应为 (width, height)，默认裁剪为圆的
+        def getAvatar(text, size, needClipToCircle: bool = True):
             if text.isdigit():
                 theQQ = int(text)
             else:
@@ -42,10 +42,11 @@ class DrawTool:
             avatar = Image.open(avatarPath)
             avatar = avatar.resize(size)
             avatar = avatar.convert("RGBA")
-            circle = Image.new('L', avatar.size, 0)  # 创建一个黑色正方形画布
-            draw = ImageDraw.Draw(circle)
-            draw.ellipse((0, 0, avatar.size[0], avatar.size[1]), fill=255)  # 画一个白色圆形
-            avatar.putalpha(circle)  # 白色区域透明可见，黑色区域不可见
+            if needClipToCircle:
+                circle = Image.new('L', avatar.size, 0)  # 创建一个黑色正方形画布
+                draw = ImageDraw.Draw(circle)
+                draw.ellipse((0, 0, avatar.size[0], avatar.size[1]), fill=255)  # 画一个白色圆形
+                avatar.putalpha(circle)  # 白色区域透明可见，黑色区域不可见
             return avatar
 
         if text.startswith("丢"):
@@ -602,6 +603,26 @@ class DrawTool:
             resultPath = os.path.join(self.resultDirPath, "{}.gif".format(time.time()))
             bounceImages[0].save(resultPath, format="GIF", append_images=bounceImages[1:], save_all=True, duration=70, loop=0)
             return [resultPath]
+        elif text.startswith("致电"):
+            avatar = getAvatar(text[2:], (95, 95), needClipToCircle=False)
+            if avatar is None:
+                return None
+            call = Image.open(os.path.join(self.drawPath, "call.jpg"))
+            call.paste(avatar, (153, 48), avatar.split()[3])
+            resultPath = os.path.join(self.resultDirPath, "{}.jpg".format(time.time()))
+            call.save(resultPath)
+            return [resultPath]
+        elif text.startswith("需要"):
+            avatar = getAvatar(text[2:], (113, 113), needClipToCircle=False)
+            if avatar is None:
+                return None
+            frontImage = Image.open(os.path.join(self.drawPath, "need.png"))
+            need = Image.new("RGBA", frontImage.size, (255, 255, 255))
+            need.paste(avatar, (328, 232), avatar.split()[3])
+            need.paste(frontImage, (0, 0), frontImage.split()[3])
+            resultPath = os.path.join(self.resultDirPath, "{}.png".format(time.time()))
+            need.save(resultPath)
+            return [resultPath]
 
         return None
 
@@ -641,6 +662,8 @@ def test():
         "好玩{}".format(testQQNum),
         "贴贴{}".format(testQQNum),
         "弹{}".format(testQQNum),
+        "致电{}".format(testQQNum),
+        "需要{}".format(testQQNum),
     ]
 
     tool = DrawTool()

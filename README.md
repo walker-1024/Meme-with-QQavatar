@@ -128,6 +128,14 @@
 
 <img src="result/1662788996.88271.gif" alt="1662788996.88271" width = "500" />
 
+### 致电
+
+<img src="result/1669396460.2140968.jpg" alt="1669396460.2140968" width = "500" />
+
+### 需要
+
+<img src="result/1669396460.440392.png" alt="1669396460.440392" width = "500" />
+
 
 ### There will be more...
 
@@ -177,6 +185,8 @@ testCommand = [
     "好玩{}".format(testQQNum),
     "贴贴{}".format(testQQNum),
     "弹{}".format(testQQNum),
+    "致电{}".format(testQQNum),
+    "需要{}".format(testQQNum),
 ]
 
 tool = DrawTool()
