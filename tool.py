@@ -604,11 +604,11 @@ class DrawTool:
             bounceImages[0].save(resultPath, format="GIF", append_images=bounceImages[1:], save_all=True, duration=70, loop=0)
             return [resultPath]
         elif text.startswith("致电"):
-            avatar = getAvatar(text[2:], (95, 95), needClipToCircle=False)
+            avatar = getAvatar(text[2:], (90, 90))
             if avatar is None:
                 return None
             call = Image.open(os.path.join(self.drawPath, "call.jpg"))
-            call.paste(avatar, (153, 48), avatar.split()[3])
+            call.paste(avatar, (156, 50), avatar.split()[3])
             resultPath = os.path.join(self.resultDirPath, "{}.jpg".format(time.time()))
             call.save(resultPath)
             return [resultPath]
