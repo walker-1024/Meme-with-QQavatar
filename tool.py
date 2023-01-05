@@ -623,6 +623,21 @@ class DrawTool:
             resultPath = os.path.join(self.resultDirPath, "{}.png".format(time.time()))
             need.save(resultPath)
             return [resultPath]
+        elif text.startswith("扭"):
+            avatar = getAvatar(text[1:], (33, 32))
+            if avatar is None:
+                return None
+            twistPath = os.path.join(self.drawPath, "twist")
+            twistImages = []
+            for i in range(0, 5):
+                backImage = Image.open(os.path.join(twistPath, "twist_{}.png".format(i + 1)))
+                img = Image.new("RGBA", backImage.size, (255, 255, 255))
+                img.paste(backImage, (0, 0), backImage.split()[3])
+                img.paste(avatar, (12, 3), avatar.split()[3])
+                twistImages.append(img)
+            resultPath = os.path.join(self.resultDirPath, "{}.gif".format(time.time()))
+            twistImages[0].save(resultPath, format="GIF", append_images=twistImages[1:], save_all=True, duration=40, loop=0)
+            return [resultPath]
 
         return None
 
@@ -664,6 +679,7 @@ def test():
         "弹{}".format(testQQNum),
         "致电{}".format(testQQNum),
         "需要{}".format(testQQNum),
+        "扭{}".format(testQQNum),
     ]
 
     tool = DrawTool()
