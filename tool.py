@@ -638,6 +638,15 @@ class DrawTool:
             resultPath = os.path.join(self.resultDirPath, "{}.gif".format(time.time()))
             twistImages[0].save(resultPath, format="GIF", append_images=twistImages[1:], save_all=True, duration=40, loop=0)
             return [resultPath]
+        elif text.startswith("看到"):
+            avatar = getAvatar(text[2:], (176, 176))
+            if avatar is None:
+                return None
+            sight = Image.open(os.path.join(self.drawPath, "sight.jpg"))
+            sight.paste(avatar, (610, 160), avatar.split()[3])
+            resultPath = os.path.join(self.resultDirPath, "{}.jpg".format(time.time()))
+            sight.save(resultPath)
+            return [resultPath]
 
         return None
 
@@ -680,6 +689,7 @@ def test():
         "致电{}".format(testQQNum),
         "需要{}".format(testQQNum),
         "扭{}".format(testQQNum),
+        "看到{}".format(testQQNum),
     ]
 
     tool = DrawTool()

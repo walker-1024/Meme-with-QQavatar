@@ -140,6 +140,10 @@
 
 <img src="result/1672900564.408156.gif" alt="1672900564.408156" width = "500" />
 
+### 看到
+
+<img src="result/1674147404.964382.jpg" alt="1674147404.964382" width = "500" />
+
 
 ### There will be more...
 
@@ -192,6 +196,7 @@ testCommand = [
     "致电{}".format(testQQNum),
     "需要{}".format(testQQNum),
     "扭{}".format(testQQNum),
+    "看到{}".format(testQQNum),
 ]
 
 tool = DrawTool()
